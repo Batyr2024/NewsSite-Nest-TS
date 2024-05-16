@@ -16,46 +16,44 @@ exports.TagService = void 0;
 const common_1 = require("@nestjs/common");
 const sequelize_1 = require("@nestjs/sequelize");
 const tag_model_1 = require("./models/tag.model");
+const post_model_1 = require("../posts/models/post.model");
 let TagService = class TagService {
     constructor(tagRepository) {
         this.tagRepository = tagRepository;
     }
     async searchTags(userTags) {
         let newTags = [];
-        let idTags = [];
         await this.tagRepository.findAll()
             .then((data) => {
-            let dataIdTag = [];
             let dataNameTag = [];
-            data.forEach((element) => { dataNameTag.push(element.dataValues.nameTag); dataIdTag.push(element.dataValues.id); });
+            data.forEach((element) => dataNameTag.push(element.dataValues.nameTag));
             userTags.forEach((element) => {
-                if (dataNameTag.includes(element) === false) {
+                if (dataNameTag.includes(element.nameTag) === false) {
                     newTags.push(element);
-                }
-                else {
-                    let tagIndexById = dataNameTag.findIndex((tag) => tag === element);
-                    idTags.push(dataIdTag[tagIndexById]);
                 }
             });
         })
-            .catch((error) => `ERROR: ${error}`);
-        return { newTags, idTags };
+            .catch((error) => { `ERROR: ${error}`; });
+        return newTags;
     }
-    async getIdTagsByPost(userTags) {
-        this.searchTags(userTags)
+    async checkForAvilabilityTags(userTags) {
+        let dataTags = [];
+        await this.searchTags(userTags)
             .then(async (data) => {
-            if (data.newTags.length !== 0) {
-                await this.tagRepository.bulkCreate(data.newTags)
-                    .then((dataNewTags) => {
-                    dataNewTags.forEach((element) => {
-                        data.idTags.push(element.dataValues.id);
-                    });
-                })
-                    .catch((error) => `ERROR: ${error}`);
+            if (data.length !== 0) {
+                await this.tagRepository.bulkCreate(data);
             }
-            return data.idTags;
+            const allStatus = await Promise.all(userTags.map(async (element) => {
+                await this.tagRepository.findOne({ where: { nameTag: element.nameTag } })
+                    .then(async (data) => {
+                    await this.tagRepository.findByPk(data.id, { include: [{ model: post_model_1.Post }] });
+                    dataTags.push(data.dataValues.id);
+                    return dataTags;
+                });
+            }));
         })
-            .catch((error) => `ERROR: ${error}`);
+            .catch((error) => error);
+        return dataTags;
     }
 };
 exports.TagService = TagService;

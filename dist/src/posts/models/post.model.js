@@ -36,8 +36,11 @@ __decorate([
     (0, sequelize_typescript_1.Column)({ type: sequelize_typescript_1.DataType.STRING }),
     __metadata("design:type", String)
 ], Post.prototype, "picture", void 0);
-exports.Post = Post = __decorate([
+__decorate([
     (0, sequelize_typescript_1.BelongsToMany)(() => tag_model_1.Tag, () => tags_posts_model_1.TagsPosts),
+    __metadata("design:type", Array)
+], Post.prototype, "tag", void 0);
+exports.Post = Post = __decorate([
     (0, sequelize_typescript_1.Table)({ tableName: 'post' })
 ], Post);
 //# sourceMappingURL=post.model.js.map

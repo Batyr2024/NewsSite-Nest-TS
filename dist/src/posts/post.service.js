@@ -26,14 +26,10 @@ let PostService = class PostService {
     }
     async createPost(postObject) {
         try {
-            let Post;
-            const post = await this.postRepository.create(postObject)
-                .then((data) => { Post = data; });
-            const tag = this.tagService.getIdTagsByPost(postObject.tag)
-                .then(async (Tags) => {
-                if (Tags !== undefined) {
-                    Tags.forEach(async (elementId) => await this.tagsPostsService.createAssociationTagsPosts(Post.id, elementId));
-                }
+            const tagsId = await this.tagService.checkForAvilabilityTags(postObject.tag);
+            await this.postRepository.create(postObject)
+                .then(async (dataPost) => {
+                await this.tagsPostsService.createAssociationTagsPosts(dataPost.id, tagsId);
             });
             return 'Post was successfully created';
         }

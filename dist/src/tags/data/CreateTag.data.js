@@ -17,6 +17,6 @@ exports.CreateTagData = CreateTagData;
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
-    __metadata("design:type", Array)
-], CreateTagData.prototype, "nameTag", void 0);
+    __metadata("design:type", Number)
+], CreateTagData.prototype, "id", void 0);
 //# sourceMappingURL=CreateTag.data.js.map

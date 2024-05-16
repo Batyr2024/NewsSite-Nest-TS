@@ -24,8 +24,11 @@ __decorate([
     (0, sequelize_typescript_1.Column)({ type: sequelize_typescript_1.DataType.STRING, allowNull: false }),
     __metadata("design:type", String)
 ], Tag.prototype, "nameTag", void 0);
-exports.Tag = Tag = __decorate([
+__decorate([
     (0, sequelize_typescript_1.BelongsToMany)(() => post_model_1.Post, () => tags_posts_model_1.TagsPosts),
+    __metadata("design:type", Array)
+], Tag.prototype, "post", void 0);
+exports.Tag = Tag = __decorate([
     (0, sequelize_typescript_1.Table)({ tableName: 'tag' })
 ], Tag);
 //# sourceMappingURL=tag.model.js.map

@@ -20,8 +20,15 @@ let TagsPostsService = class TagsPostsService {
     constructor(tagsPostsRepository) {
         this.tagsPostsRepository = tagsPostsRepository;
     }
-    async createAssociationTagsPosts(idPost, idTags) {
-        return await this.tagsPostsRepository.create({ idPosts: idPost, idTags: idTags });
+    async createAssociationTagsPosts(postId, tagsId) {
+        try {
+            const tagsPosts = [];
+            tagsId.map((element) => tagsPosts.push({ idPosts: postId, idTags: element }));
+            await this.tagsPostsRepository.bulkCreate(tagsPosts);
+        }
+        catch (error) {
+            return error;
+        }
     }
 };
 exports.TagsPostsService = TagsPostsService;

@@ -1,3 +1,4 @@
 export declare class CreateTagData {
-    readonly nameTag: Array<string>;
+    readonly id?: number;
+    readonly nameTag: string;
 }
