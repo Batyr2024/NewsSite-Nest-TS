@@ -23,6 +23,9 @@ let PostController = class PostController {
     createPost(postObject) {
         return this.postService.createPost(postObject);
     }
+    getPostsAll() {
+        return this.postService.getPostsAll();
+    }
 };
 exports.PostController = PostController;
 __decorate([
@@ -32,6 +35,12 @@ __decorate([
     __metadata("design:paramtypes", [CreatePost_data_1.CreatePostData]),
     __metadata("design:returntype", void 0)
 ], PostController.prototype, "createPost", null);
+__decorate([
+    (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], PostController.prototype, "getPostsAll", null);
 exports.PostController = PostController = __decorate([
     (0, common_1.Controller)('post'),
     __metadata("design:paramtypes", [post_service_1.PostService])

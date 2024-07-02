@@ -8,4 +8,5 @@ export declare class PostService {
     private tagsPostsService;
     constructor(postRepository: typeof Post, tagService: TagService, tagsPostsService: TagsPostsService);
     createPost(postObject: CreatePostData): Promise<string>;
+    getPostsAll(): Promise<Post[]>;
 }

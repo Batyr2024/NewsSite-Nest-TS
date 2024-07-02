@@ -13,6 +13,6 @@ export class PostController {
 
     @Get()
     getPostsAll(){
-        return this.postService.getPostsAll();
+        return this.postService.getGeneralPosts();
     }
 }

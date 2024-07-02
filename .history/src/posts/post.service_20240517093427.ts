@@ -25,7 +25,7 @@ export class PostService {
     }
 
     async getPostsAll(){
-        return await this.postRepository.findAll({include:[Tag]});
+        return await this.postRepository.findAll()
     }
 
 }
