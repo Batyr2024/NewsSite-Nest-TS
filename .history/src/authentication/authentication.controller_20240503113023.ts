@@ -1,3 +1,0 @@
-
-@Controller('tag')
-export class
